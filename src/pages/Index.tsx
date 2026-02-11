@@ -1,14 +1,25 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { GameProvider, useGame } from '@/contexts/GameContext';
+import WelcomeScreen from '@/components/WelcomeScreen';
+import BuildingInterface from '@/components/BuildingInterface';
+import RevealScreen from '@/components/RevealScreen';
+import QuizScreen from '@/components/QuizScreen';
 
-const Index = () => {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+const GameRouter = () => {
+  const { screen } = useGame();
+
+  switch (screen) {
+    case 'welcome': return <WelcomeScreen />;
+    case 'building': return <BuildingInterface />;
+    case 'reveal': return <RevealScreen />;
+    case 'quiz': return <QuizScreen />;
+    default: return <WelcomeScreen />;
+  }
 };
+
+const Index = () => (
+  <GameProvider>
+    <GameRouter />
+  </GameProvider>
+);
 
 export default Index;

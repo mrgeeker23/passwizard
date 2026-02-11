@@ -1,96 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    /* Fun Mode - Light magical theme */
+    --background: 200 50% 88%;
+    --foreground: 210 60% 15%;
+    --card: 200 40% 95%;
+    --card-foreground: 210 60% 15%;
+    --popover: 200 40% 95%;
+    --popover-foreground: 210 60% 15%;
+    --primary: 155 60% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 200 50% 82%;
+    --secondary-foreground: 210 60% 15%;
+    --muted: 200 30% 90%;
+    --muted-foreground: 210 20% 40%;
+    --accent: 38 90% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 200 30% 78%;
+    --input: 200 30% 82%;
+    --ring: 155 60% 45%;
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom PassWizard tokens */
+    --wizard-blue: 210 70% 55%;
+    --wizard-gold: 38 90% 55%;
+    --wizard-purple: 250 60% 50%;
+    --game-card: 200 30% 96%;
+    --game-card-border: 210 40% 80%;
+    --game-card-selected: 155 60% 90%;
+    --game-card-selected-border: 155 60% 45%;
+    --tab-active: 155 60% 45%;
+    --tab-inactive: 200 30% 85%;
+    --reveal-bg: 200 50% 88%;
+    --strength-weak: 0 80% 55%;
+    --strength-medium: 45 90% 50%;
+    --strength-strong: 140 70% 42%;
+
+    --font-display: 'Fredoka', 'Baloo 2', sans-serif;
+    --font-body: 'Baloo 2', sans-serif;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
+    /* Pro Mode - Dark sleek theme */
+    --background: 220 20% 10%;
+    --foreground: 210 20% 90%;
+    --card: 220 18% 14%;
+    --card-foreground: 210 20% 90%;
+    --popover: 220 18% 14%;
+    --popover-foreground: 210 20% 90%;
+    --primary: 155 60% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 15% 20%;
+    --secondary-foreground: 210 20% 85%;
+    --muted: 220 15% 18%;
+    --muted-foreground: 210 10% 55%;
+    --accent: 38 80% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 30%;
     --destructive-foreground: 210 40% 98%;
+    --border: 220 15% 22%;
+    --input: 220 15% 22%;
+    --ring: 155 60% 45%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --wizard-blue: 210 60% 45%;
+    --wizard-gold: 38 80% 50%;
+    --wizard-purple: 250 50% 40%;
+    --game-card: 220 18% 16%;
+    --game-card-border: 220 15% 25%;
+    --game-card-selected: 155 40% 15%;
+    --game-card-selected-border: 155 60% 40%;
+    --tab-active: 155 60% 40%;
+    --tab-inactive: 220 15% 20%;
+    --reveal-bg: 220 20% 10%;
+
+    --font-display: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
   }
 }
 
@@ -98,8 +98,86 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .game-card {
+    @apply rounded-2xl border-2 p-4 cursor-pointer transition-all duration-200;
+    background: hsl(var(--game-card));
+    border-color: hsl(var(--game-card-border));
+  }
+  .game-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px -5px hsl(var(--wizard-blue) / 0.3);
+  }
+  .game-card.selected {
+    background: hsl(var(--game-card-selected));
+    border-color: hsl(var(--game-card-selected-border));
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  .game-btn {
+    @apply rounded-full px-8 py-4 font-bold text-lg transition-all duration-200;
+    font-family: var(--font-display);
+  }
+  .game-btn-primary {
+    @apply game-btn;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 4px 0 hsl(155 60% 35%), 0 6px 20px hsl(var(--primary) / 0.3);
+  }
+  .game-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 hsl(155 60% 35%), 0 10px 30px hsl(var(--primary) / 0.4);
+  }
+  .game-btn-primary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 hsl(155 60% 35%);
+  }
+  .game-btn-accent {
+    @apply game-btn;
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    box-shadow: 0 4px 0 hsl(38 90% 40%), 0 6px 20px hsl(var(--accent) / 0.3);
+  }
+  .game-btn-accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 hsl(38 90% 40%), 0 10px 30px hsl(var(--accent) / 0.4);
+  }
+  .game-btn-accent:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 hsl(38 90% 40%);
+  }
+  .game-panel {
+    @apply rounded-3xl border-2 p-6;
+    background: hsl(var(--card));
+    border-color: hsl(var(--game-card-border));
+  }
+  .tab-btn {
+    @apply rounded-xl px-4 py-2 font-semibold text-sm transition-all duration-200;
+    font-family: var(--font-display);
+  }
+  .tab-btn.active {
+    background: hsl(var(--tab-active));
+    color: hsl(var(--primary-foreground));
+  }
+  .tab-btn:not(.active) {
+    background: hsl(var(--tab-inactive));
+    color: hsl(var(--foreground));
+  }
+  .strength-bar {
+    @apply h-4 rounded-full transition-all duration-500;
+  }
+  .mode-card {
+    @apply game-card text-center p-6;
+  }
+  .mode-card:hover {
+    transform: scale(1.08);
   }
 }
