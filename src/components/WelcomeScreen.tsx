@@ -7,7 +7,7 @@ const WelcomeScreen = () => {
   const { setMode, setScreen, mode } = useGame();
 
   const handleModeSelect = (m: 'fun' | 'pro') => {
-    playSelect();
+    playClick();
     setMode(m);
   };
 
