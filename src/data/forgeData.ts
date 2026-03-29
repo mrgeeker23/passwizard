@@ -13,125 +13,192 @@ export interface ForgeOptions {
   symbols: ForgeChoice[];
 }
 
-// COLOR FORGE - Elemental Essence
-const colorBuckets = {
-  fire: [
-    { label: 'CrimsonEmber', emoji: '🔥', color: '0 80% 50%' },
-    { label: 'ScarletBlaze', emoji: '🌋', color: '5 85% 48%' },
-    { label: 'RubyFlame', emoji: '💎', color: '350 75% 45%' },
-    { label: 'InfernoFox', emoji: '🦊', color: '15 90% 52%' },
-    { label: 'MoltenSun', emoji: '☀️', color: '25 95% 55%' },
+// ===== FUN MODE DATA (short, simple, kid-friendly) =====
+
+const funColors = {
+  warm: [
+    { label: 'Red', emoji: '❤️', color: '0 80% 50%' },
+    { label: 'Orange', emoji: '🧡', color: '25 95% 55%' },
+    { label: 'Pink', emoji: '💖', color: '330 80% 60%' },
+    { label: 'Sunny', emoji: '☀️', color: '45 90% 55%' },
+    { label: 'Rose', emoji: '🌹', color: '345 75% 50%' },
+    { label: 'Peach', emoji: '🍑', color: '20 85% 65%' },
   ],
-  water: [
-    { label: 'AzureFrost', emoji: '❄️', color: '200 80% 55%' },
-    { label: 'CobaltWave', emoji: '🌊', color: '215 75% 50%' },
-    { label: 'SapphireTide', emoji: '💧', color: '220 70% 48%' },
-    { label: 'CrystalStream', emoji: '🏔️', color: '190 65% 52%' },
-    { label: 'OceanMist', emoji: '🐋', color: '195 70% 58%' },
+  cool: [
+    { label: 'Blue', emoji: '💙', color: '210 80% 55%' },
+    { label: 'Sky', emoji: '☁️', color: '200 75% 60%' },
+    { label: 'Ice', emoji: '🧊', color: '195 70% 55%' },
+    { label: 'Aqua', emoji: '🌊', color: '180 65% 50%' },
+    { label: 'Ocean', emoji: '🐳', color: '215 75% 50%' },
+    { label: 'Rain', emoji: '🌧️', color: '220 60% 55%' },
   ],
   nature: [
-    { label: 'EmeraldVine', emoji: '🌿', color: '140 70% 40%' },
-    { label: 'JadeForest', emoji: '🌲', color: '150 65% 38%' },
-    { label: 'LimeSpring', emoji: '🍀', color: '100 75% 45%' },
-    { label: 'MossStone', emoji: '🪨', color: '120 50% 42%' },
-    { label: 'FernGlow', emoji: '🦎', color: '130 60% 44%' },
+    { label: 'Green', emoji: '💚', color: '140 70% 40%' },
+    { label: 'Leaf', emoji: '🍀', color: '120 65% 45%' },
+    { label: 'Lime', emoji: '🍋', color: '80 75% 50%' },
+    { label: 'Mint', emoji: '🌿', color: '160 60% 48%' },
+    { label: 'Fern', emoji: '🌱', color: '130 55% 42%' },
+    { label: 'Moss', emoji: '🪴', color: '100 50% 40%' },
   ],
-  mystic: [
-    { label: 'AmethystStar', emoji: '⭐', color: '270 65% 50%' },
-    { label: 'GoldenSunforge', emoji: '👑', color: '42 90% 50%' },
-    { label: 'ObsidianShadow', emoji: '🌑', color: '260 30% 25%' },
-    { label: 'SilverMoon', emoji: '🌙', color: '210 20% 70%' },
-    { label: 'VioletVeil', emoji: '🔮', color: '280 60% 48%' },
+  magic: [
+    { label: 'Purple', emoji: '💜', color: '270 65% 50%' },
+    { label: 'Gold', emoji: '👑', color: '42 90% 50%' },
+    { label: 'Silver', emoji: '🌙', color: '210 20% 70%' },
+    { label: 'Star', emoji: '⭐', color: '50 85% 55%' },
+    { label: 'Moon', emoji: '🌛', color: '240 30% 60%' },
+    { label: 'Glow', emoji: '✨', color: '55 80% 58%' },
   ],
 };
 
-// CARTOON FORGE - Mythic Companion
-const cartoonEras = {
+const funCartoons = {
   classic: [
     { label: 'Garfield', emoji: '🐱' },
-    { label: 'ScoobyDoo', emoji: '🐕' },
-    { label: 'PowerRanger', emoji: '⚡' },
-    { label: 'TomAndJerry', emoji: '🐭' },
-  ],
-  y2k: [
-    { label: 'SpongeBob', emoji: '🧽' },
-    { label: 'AvatarAang', emoji: '💨' },
-    { label: 'Ben10', emoji: '🔟' },
-    { label: 'DextersLab', emoji: '🧪' },
+    { label: 'Scooby', emoji: '🐕' },
+    { label: 'Tom', emoji: '🐱' },
+    { label: 'Jerry', emoji: '🐭' },
+    { label: 'Tweety', emoji: '🐥' },
+    { label: 'Bugs', emoji: '🐰' },
   ],
   modern: [
     { label: 'Bluey', emoji: '🐶' },
-    { label: 'PawPatrol', emoji: '🐾' },
-    { label: 'Ladybug', emoji: '🐞' },
-    { label: 'PeppaPig', emoji: '🐷' },
+    { label: 'Peppa', emoji: '🐷' },
+    { label: 'Elsa', emoji: '❄️' },
+    { label: 'Olaf', emoji: '⛄' },
+    { label: 'Moana', emoji: '🌺' },
+    { label: 'Simba', emoji: '🦁' },
+  ],
+  pop: [
+    { label: 'Sponge', emoji: '🧽' },
+    { label: 'Pika', emoji: '⚡' },
+    { label: 'Mario', emoji: '🍄' },
+    { label: 'Sonic', emoji: '💨' },
+    { label: 'Kirby', emoji: '🩷' },
+    { label: 'Yoshi', emoji: '🦖' },
+  ],
+  cute: [
+    { label: 'Panda', emoji: '🐼' },
+    { label: 'Bunny', emoji: '🐰' },
+    { label: 'Kitty', emoji: '🐱' },
+    { label: 'Puppy', emoji: '🐶' },
+    { label: 'Ducky', emoji: '🦆' },
+    { label: 'Foxy', emoji: '🦊' },
+  ],
+};
+
+const funTitles = [
+  'Star', 'Hero', 'Pal', 'Champ', 'Ace', 'Buddy',
+  'King', 'Boss', 'Pro', 'Whiz', 'Dash', 'Spark',
+];
+
+// Fun mode uses emojis as the "symbol" ingredient
+const funEmojiPool = [
+  { label: '🔥', emoji: '🔥' },
+  { label: '⚡', emoji: '⚡' },
+  { label: '🌈', emoji: '🌈' },
+  { label: '🎮', emoji: '🎮' },
+  { label: '🚀', emoji: '🚀' },
+  { label: '💎', emoji: '💎' },
+  { label: '🦄', emoji: '🦄' },
+  { label: '🍕', emoji: '🍕' },
+  { label: '🎸', emoji: '🎸' },
+  { label: '🏆', emoji: '🏆' },
+  { label: '🎯', emoji: '🎯' },
+  { label: '🌟', emoji: '🌟' },
+  { label: '🎪', emoji: '🎪' },
+  { label: '🧲', emoji: '🧲' },
+  { label: '🪄', emoji: '🪄' },
+];
+
+// ===== PRO MODE DATA (slightly harder but still readable) =====
+
+const proColors = {
+  fire: [
+    { label: 'Crimson', emoji: '🔥', color: '0 80% 50%' },
+    { label: 'Scarlet', emoji: '🌋', color: '5 85% 48%' },
+    { label: 'Ember', emoji: '🔶', color: '15 90% 52%' },
+    { label: 'Blaze', emoji: '💥', color: '25 95% 55%' },
+    { label: 'Ruby', emoji: '💎', color: '350 75% 45%' },
+    { label: 'Coral', emoji: '🪸', color: '10 80% 55%' },
+  ],
+  frost: [
+    { label: 'Azure', emoji: '❄️', color: '200 80% 55%' },
+    { label: 'Cobalt', emoji: '🌊', color: '215 75% 50%' },
+    { label: 'Frost', emoji: '🧊', color: '190 65% 52%' },
+    { label: 'Sapphire', emoji: '💧', color: '220 70% 48%' },
+    { label: 'Slate', emoji: '🌀', color: '210 40% 45%' },
+    { label: 'Indigo', emoji: '🔵', color: '240 60% 48%' },
+  ],
+  earth: [
+    { label: 'Emerald', emoji: '🌿', color: '140 70% 40%' },
+    { label: 'Jade', emoji: '🌲', color: '150 65% 38%' },
+    { label: 'Sage', emoji: '🍀', color: '100 50% 45%' },
+    { label: 'Cedar', emoji: '🪵', color: '30 45% 35%' },
+    { label: 'Fern', emoji: '🦎', color: '130 60% 44%' },
+    { label: 'Olive', emoji: '🫒', color: '80 40% 40%' },
+  ],
+  arcane: [
+    { label: 'Onyx', emoji: '🌑', color: '260 30% 25%' },
+    { label: 'Amethyst', emoji: '🔮', color: '270 65% 50%' },
+    { label: 'Gilded', emoji: '👑', color: '42 90% 50%' },
+    { label: 'Silver', emoji: '🌙', color: '210 20% 70%' },
+    { label: 'Violet', emoji: '🌸', color: '280 60% 48%' },
+    { label: 'Obsidian', emoji: '⬛', color: '0 0% 15%' },
+  ],
+};
+
+const proCartoons = {
+  classic: [
+    { label: 'Garfield', emoji: '🐱' },
+    { label: 'Scooby', emoji: '🐕' },
+    { label: 'Ranger', emoji: '⚡' },
+    { label: 'Dexter', emoji: '🧪' },
+    { label: 'Samurai', emoji: '⚔️' },
+    { label: 'Zorro', emoji: '🎭' },
+  ],
+  modern: [
+    { label: 'Aang', emoji: '💨' },
+    { label: 'Ben10', emoji: '🔟' },
+    { label: 'Gumball', emoji: '🐱' },
+    { label: 'Finn', emoji: '🗡️' },
+    { label: 'Raven', emoji: '🦅' },
+    { label: 'Beast', emoji: '🐾' },
   ],
   anime: [
-    { label: 'Pikachu', emoji: '⚡' },
     { label: 'Naruto', emoji: '🍥' },
-    { label: 'Doraemon', emoji: '🤖' },
     { label: 'Goku', emoji: '🐉' },
+    { label: 'Luffy', emoji: '🏴‍☠️' },
+    { label: 'Zoro', emoji: '⚔️' },
+    { label: 'Vegeta', emoji: '👊' },
+    { label: 'Tanjiro', emoji: '🔥' },
+  ],
+  gaming: [
+    { label: 'Mario', emoji: '🍄' },
+    { label: 'Link', emoji: '🗡️' },
+    { label: 'Sonic', emoji: '💨' },
+    { label: 'Cloud', emoji: '⚡' },
+    { label: 'Kratos', emoji: '⛓️' },
+    { label: 'Master', emoji: '🎮' },
   ],
   wild: [
-    { label: 'AmongUs', emoji: '🚀' },
-    { label: 'Gumball', emoji: '🐱' },
-    { label: 'PhineasFerb', emoji: '🔧' },
-    { label: 'KickButtowski', emoji: '🛹' },
+    { label: 'Crewmate', emoji: '🚀' },
+    { label: 'Phoenix', emoji: '🔥' },
+    { label: 'Shadow', emoji: '🌑' },
+    { label: 'Falcon', emoji: '🦅' },
+    { label: 'Viper', emoji: '🐍' },
+    { label: 'Storm', emoji: '⛈️' },
   ],
 };
 
-const cartoonTitles = [
-  'Bubble Sorcerer', 'Thunder Spirit', 'Time Mage', 'Shadow Knight',
-  'Storm Wizard', 'Flame Guardian', 'Frost Healer', 'Star Seeker',
-  'Adventure Mage', 'Crystal Paladin', 'Mystic Ranger', 'Arcane Scout',
+const proTitles = [
+  'Mage', 'Knight', 'Rogue', 'Sage', 'Scout', 'Ace',
+  'Bolt', 'Edge', 'Fang', 'Hawk', 'Flux', 'Core',
 ];
 
-// SYMBOL FORGE
-const funSymbolPool = ['!', '@', '#', '$', '*', '+', '?'];
-const proSymbolPool = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '-', '=', '{', '}', '[', ']', '|', ':', ';', '<', '>', '?', '~'];
-const rareSymbols = ['★', '∞', '◆', '♦'];
+// Pro mode uses actual symbols
+const proSymbolPool = ['!', '@', '#', '$', '%', '^', '&', '*', '_', '+', '-', '=', '?', '~'];
 
-// Fun mode cartoons - kid-friendly, simple names
-const funCartoonEras = {
-  classic: [
-    { label: 'Garfield', emoji: '🐱' },
-    { label: 'ScoobyDoo', emoji: '🐕' },
-    { label: 'TomAndJerry', emoji: '🐭' },
-  ],
-  modern: [
-    { label: 'Bluey', emoji: '🐶' },
-    { label: 'PawPatrol', emoji: '🐾' },
-    { label: 'PeppaPig', emoji: '🐷' },
-  ],
-  y2k: [
-    { label: 'SpongeBob', emoji: '🧽' },
-    { label: 'Pikachu', emoji: '⚡' },
-    { label: 'Doraemon', emoji: '🤖' },
-  ],
-};
+// ===== SHARED UTILITIES =====
 
-const funCartoonTitles = [
-  'Buddy', 'Star', 'Hero', 'Pal', 'Friend', 'Champ',
-];
-
-// Fun mode colors - simpler names
-const funColorBuckets = {
-  fire: [
-    { label: 'RedStar', emoji: '⭐', color: '0 80% 50%' },
-    { label: 'OrangeGlow', emoji: '🌅', color: '25 95% 55%' },
-  ],
-  water: [
-    { label: 'BlueSky', emoji: '☁️', color: '200 80% 55%' },
-    { label: 'OceanWave', emoji: '🌊', color: '215 75% 50%' },
-  ],
-  nature: [
-    { label: 'GreenLeaf', emoji: '🍀', color: '140 70% 40%' },
-    { label: 'LimeZap', emoji: '🦎', color: '100 75% 45%' },
-  ],
-  mystic: [
-    { label: 'PurpleMagic', emoji: '🔮', color: '270 65% 50%' },
-    { label: 'GoldShine', emoji: '👑', color: '42 90% 50%' },
-  ],
-};
 function pickRandom<T>(arr: T[], count: number): T[] {
   const shuffled = [...arr].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, count);
@@ -139,11 +206,11 @@ function pickRandom<T>(arr: T[], count: number): T[] {
 
 function generateNumbers(mode: 'fun' | 'pro'): ForgeChoice[] {
   const nums: number[] = [];
-  const max = mode === 'fun' ? 20 : 100;
-  const minDist = mode === 'fun' ? 5 : 15;
+  const max = mode === 'fun' ? 20 : 99;
+  const minDist = mode === 'fun' ? 3 : 10;
   const first = Math.floor(Math.random() * max) + 1;
   nums.push(first);
-  
+
   let attempts = 0;
   while (nums.length < 3 && attempts < 100) {
     const n = Math.floor(Math.random() * max) + 1;
@@ -152,77 +219,70 @@ function generateNumbers(mode: 'fun' | 'pro'): ForgeChoice[] {
     attempts++;
   }
   while (nums.length < 3) nums.push(Math.floor(Math.random() * max) + 1);
-  
+
   return nums.map(n => ({ label: String(n), emoji: mode === 'fun' ? '🎯' : '🎲' }));
 }
 
-function generateSymbols(mode: 'fun' | 'pro'): ForgeChoice[] {
-  const pool = mode === 'fun' ? funSymbolPool : proSymbolPool;
+function generateFunSymbols(): ForgeChoice[] {
+  return pickRandom(funEmojiPool, 3);
+}
+
+function generateProSymbols(): ForgeChoice[] {
   const results: ForgeChoice[] = [];
-  
   for (let i = 0; i < 3; i++) {
-    const len = mode === 'fun' ? 1 : (Math.random() < 0.4 ? 1 : Math.random() < 0.7 ? 2 : 3);
-    const useRare = mode === 'pro' && Math.random() < 0.1;
-    
-    if (useRare && len <= 2) {
-      const rare = pickRandom(rareSymbols, len);
-      results.push({ label: rare.join(''), emoji: '✨' });
-    } else {
-      const syms = pickRandom(pool, len);
-      results.push({ label: syms.join(''), emoji: '✨' });
-    }
+    const len = Math.random() < 0.5 ? 1 : 2;
+    const syms = pickRandom(proSymbolPool, len);
+    results.push({ label: syms.join(''), emoji: '✨' });
   }
   return results;
 }
 
 export function generateForgeOptions(mode: 'fun' | 'pro' = 'fun'): ForgeOptions {
   if (mode === 'fun') {
-    const bucketKeys = Object.keys(funColorBuckets) as (keyof typeof funColorBuckets)[];
+    const bucketKeys = Object.keys(funColors) as (keyof typeof funColors)[];
     const selectedBuckets = pickRandom(bucketKeys, 3);
-    const colors = selectedBuckets.map(b => pickRandom(funColorBuckets[b], 1)[0]);
+    const colors = selectedBuckets.map(b => pickRandom(funColors[b], 1)[0]);
 
-    const eraKeys = Object.keys(funCartoonEras) as (keyof typeof funCartoonEras)[];
+    const eraKeys = Object.keys(funCartoons) as (keyof typeof funCartoons)[];
     const selectedEras = pickRandom(eraKeys, 2);
-    const cartoonPool: ForgeChoice[] = [];
+    const pool: ForgeChoice[] = [];
     selectedEras.forEach(era => {
-      const chars = pickRandom(funCartoonEras[era], 2);
+      const chars = pickRandom(funCartoons[era], 2);
       chars.forEach(c => {
-        const title = pickRandom(funCartoonTitles, 1)[0];
-        cartoonPool.push({ ...c, label: `${c.label} ${title}` });
+        const title = pickRandom(funTitles, 1)[0];
+        pool.push({ ...c, label: `${c.label}${title}` });
       });
     });
-    const cartoons = pickRandom(cartoonPool, 3);
 
     return {
       colors,
-      cartoons,
+      cartoons: pickRandom(pool, 3),
       numbers: generateNumbers('fun'),
-      symbols: generateSymbols('fun'),
+      symbols: generateFunSymbols(),
     };
   }
 
-  // Pro mode - complex options
-  const bucketKeys = Object.keys(colorBuckets) as (keyof typeof colorBuckets)[];
+  // Pro mode
+  const bucketKeys = Object.keys(proColors) as (keyof typeof proColors)[];
   const selectedBuckets = pickRandom(bucketKeys, 3);
-  const colors = selectedBuckets.map(b => pickRandom(colorBuckets[b], 1)[0]);
+  const colors = selectedBuckets.map(b => pickRandom(proColors[b], 1)[0]);
 
-  const eraKeys = Object.keys(cartoonEras) as (keyof typeof cartoonEras)[];
+  const eraKeys = Object.keys(proCartoons) as (keyof typeof proCartoons)[];
   const selectedEras = pickRandom(eraKeys, 2);
-  const cartoonPool: ForgeChoice[] = [];
+  const pool: ForgeChoice[] = [];
   selectedEras.forEach(era => {
-    const chars = pickRandom(cartoonEras[era], 2);
+    const chars = pickRandom(proCartoons[era], 2);
     chars.forEach(c => {
-      const title = pickRandom(cartoonTitles, 1)[0];
-      cartoonPool.push({ ...c, label: `${c.label} ${title}` });
+      const title = pickRandom(proTitles, 1)[0];
+      pool.push({ ...c, label: `${c.label}${title}` });
     });
   });
-  const cartoons = pickRandom(cartoonPool, 3);
 
   return {
     colors,
-    cartoons,
+    cartoons: pickRandom(pool, 3),
     numbers: generateNumbers('pro'),
-    symbols: generateSymbols('pro'),
+    symbols: generateProSymbols(),
   };
 }
 
