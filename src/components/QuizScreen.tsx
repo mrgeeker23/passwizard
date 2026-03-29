@@ -47,7 +47,7 @@ const QuizScreen = () => {
   if (finished) {
     const finalScore = score;
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 max-w-lg mx-auto">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 max-w-2xl mx-auto">
         <motion.img
           src={wizardLogo}
           alt="Wizard"
@@ -86,7 +86,7 @@ const QuizScreen = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col p-4 max-w-lg mx-auto">
+    <div className="min-h-screen flex flex-col p-4 max-w-2xl mx-auto">
       <div className="flex items-center gap-3 mb-4">
         <img src={wizardLogo} alt="" className="w-10 h-10 object-contain" />
         <div className="flex-1">
