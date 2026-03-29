@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useGame } from '@/contexts/GameContext';
 import { quizQuestions } from '@/data/forgeData';
 import wizardLogo from '@/assets/wizard-logo.png';
+import { playClick, playCorrect, playWrong, playVictory } from '@/lib/sounds';
 
 const QuizScreen = () => {
   const { setScreen, resetGame, mode, setQuizScore } = useGame();
@@ -18,22 +19,28 @@ const QuizScreen = () => {
     if (selected !== null) return;
     setSelected(idx);
     const correct = idx === q.correct;
-    if (correct) setScore(s => s + 1);
+    if (correct) {
+      playCorrect();
+      setScore(s => s + 1);
+    } else {
+      playWrong();
+    }
     if (mode === 'pro') setShowTip(true);
-    // In fun mode, auto-advance after a delay
     if (mode === 'fun') {
       setTimeout(() => advance(), 1500);
     }
   };
 
   const advance = () => {
+    playClick();
     if (currentQ < quizQuestions.length - 1) {
       setCurrentQ(c => c + 1);
       setSelected(null);
       setShowTip(false);
     } else {
-      setQuizScore(score + (selected === q.correct ? 0 : 0));
+      setQuizScore(score);
       setFinished(true);
+      playVictory();
     }
   };
 
@@ -67,10 +74,10 @@ const QuizScreen = () => {
           {finalScore}/{quizQuestions.length}
         </motion.p>
         <div className="flex gap-3 mt-8">
-          <button onClick={() => setScreen('reveal')} className="game-btn-primary">
+          <button onClick={() => { playClick(); setScreen('reveal'); }} className="game-btn-primary">
             ← Back to Password
           </button>
-          <button onClick={resetGame} className="game-btn-accent">
+          <button onClick={() => { playClick(); resetGame(); }} className="game-btn-accent">
             🏠 Home
           </button>
         </div>
@@ -80,7 +87,6 @@ const QuizScreen = () => {
 
   return (
     <div className="min-h-screen flex flex-col p-4 max-w-lg mx-auto">
-      {/* Progress */}
       <div className="flex items-center gap-3 mb-4">
         <img src={wizardLogo} alt="" className="w-10 h-10 object-contain" />
         <div className="flex-1">
@@ -95,7 +101,6 @@ const QuizScreen = () => {
         </div>
       </div>
 
-      {/* Question */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentQ}
@@ -140,7 +145,6 @@ const QuizScreen = () => {
             })}
           </div>
 
-          {/* Tip (Pro mode only) */}
           {showTip && mode === 'pro' && (
             <motion.div
               className="game-panel mt-4"
@@ -151,7 +155,6 @@ const QuizScreen = () => {
             </motion.div>
           )}
 
-          {/* Next button (Pro mode needs manual advance) */}
           {selected !== null && mode === 'pro' && (
             <motion.button
               onClick={advance}
@@ -163,7 +166,6 @@ const QuizScreen = () => {
             </motion.button>
           )}
 
-          {/* Fun mode feedback */}
           {selected !== null && mode === 'fun' && (
             <motion.div
               className="text-center text-3xl mt-4"
