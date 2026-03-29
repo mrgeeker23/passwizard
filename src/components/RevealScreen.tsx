@@ -2,13 +2,17 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGame } from '@/contexts/GameContext';
 import wizardLogo from '@/assets/wizard-logo.png';
+import { playReveal } from '@/lib/sounds';
 
 const RevealScreen = () => {
   const { generatedPassword, setScreen, reforge, mode } = useGame();
   const [revealing, setRevealing] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setRevealing(false), 2500);
+    const timer = setTimeout(() => {
+      setRevealing(false);
+      playReveal();
+    }, 2500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -70,7 +74,6 @@ const RevealScreen = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: 'spring', bounce: 0.4 }}
           >
-            {/* Confetti / particles in fun mode */}
             {mode === 'fun' && (
               <div className="absolute inset-0 pointer-events-none">
                 {[...Array(20)].map((_, i) => (
@@ -98,7 +101,6 @@ const RevealScreen = () => {
               </div>
             )}
 
-            {/* Wizard */}
             <motion.img
               src={wizardLogo}
               alt="Wizard celebrates"
@@ -111,10 +113,9 @@ const RevealScreen = () => {
             />
 
             <h2 className="text-2xl font-bold mt-4" style={{ fontFamily: 'var(--font-display)' }}>
-              Your Wizard Password! ✨
+              Your Wizard Password!
             </h2>
 
-            {/* Password Display */}
             <motion.div
               className="game-panel w-full mt-4 text-center"
               initial={{ boxShadow: '0 0 0 hsl(var(--primary) / 0)' }}
@@ -127,7 +128,6 @@ const RevealScreen = () => {
               <p className="text-xs text-muted-foreground mt-2">{length} characters · {mixedTypes} types mixed</p>
             </motion.div>
 
-            {/* Strength Meter */}
             <div className="w-full mt-4">
               <div className="w-full h-4 rounded-full overflow-hidden" style={{ background: 'hsl(var(--muted))' }}>
                 <motion.div
@@ -143,7 +143,6 @@ const RevealScreen = () => {
               </p>
             </div>
 
-            {/* Fun fact */}
             <motion.p
               className="text-sm text-muted-foreground mt-4 text-center italic"
               initial={{ opacity: 0 }}
@@ -153,7 +152,6 @@ const RevealScreen = () => {
               "This is way stronger than 'password123' – great job wizard!" 🧙‍♀️
             </motion.p>
 
-            {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 mt-6 w-full">
               <button onClick={() => setScreen('building')} className="game-btn-primary flex-1">
                 🔧 Tweak It

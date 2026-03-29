@@ -1,12 +1,21 @@
 import { motion } from 'framer-motion';
 import { useGame } from '@/contexts/GameContext';
 import wizardLogo from '@/assets/wizard-logo.png';
+import { playClick, playSelect } from '@/lib/sounds';
 
 const WelcomeScreen = () => {
   const { setMode, setScreen, mode } = useGame();
 
+  const handleModeSelect = (m: 'fun' | 'pro') => {
+    playSelect();
+    setMode(m);
+  };
+
   const handleStart = () => {
-    if (mode) setScreen('building');
+    if (mode) {
+      playClick();
+      setScreen('building');
+    }
   };
 
   return (
@@ -36,7 +45,6 @@ const WelcomeScreen = () => {
         ))}
       </div>
 
-      {/* Wizard Character */}
       <motion.img
         src={wizardLogo}
         alt="PassWizard - Wizard Girl"
@@ -47,7 +55,6 @@ const WelcomeScreen = () => {
         whileHover={{ rotate: [0, -5, 5, 0], transition: { duration: 0.5 } }}
       />
 
-      {/* Title */}
       <motion.h1
         className="text-5xl md:text-7xl font-extrabold mt-4 tracking-tight"
         style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--wizard-blue))' }}
@@ -68,7 +75,6 @@ const WelcomeScreen = () => {
         Wizard Up a Super Strong Password! 🪄
       </motion.p>
 
-      {/* Mode Selector */}
       <motion.div
         className="flex flex-col sm:flex-row gap-4 mt-8 w-full max-w-md"
         initial={{ y: 30, opacity: 0 }}
@@ -76,7 +82,7 @@ const WelcomeScreen = () => {
         transition={{ delay: 0.5 }}
       >
         <button
-          onClick={() => setMode('fun')}
+          onClick={() => handleModeSelect('fun')}
           className={`mode-card flex-1 ${mode === 'fun' ? 'selected' : ''}`}
         >
           <div className="text-4xl mb-2">🎨</div>
@@ -85,7 +91,7 @@ const WelcomeScreen = () => {
         </button>
 
         <button
-          onClick={() => setMode('pro')}
+          onClick={() => handleModeSelect('pro')}
           className={`mode-card flex-1 ${mode === 'pro' ? 'selected' : ''}`}
         >
           <div className="text-4xl mb-2">⚡</div>
@@ -94,7 +100,6 @@ const WelcomeScreen = () => {
         </button>
       </motion.div>
 
-      {/* Start Button */}
       <motion.button
         onClick={handleStart}
         className={`game-btn-primary mt-8 text-xl ${!mode ? 'opacity-50 cursor-not-allowed' : ''}`}

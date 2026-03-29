@@ -1,8 +1,9 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGame } from '@/contexts/GameContext';
 import wizardLogo from '@/assets/wizard-logo.png';
 import { MessageCircle, X } from 'lucide-react';
+import { playClick, playSelect } from '@/lib/sounds';
 
 const tabs = [
   { id: 'color', label: 'Color Magic', emoji: '🪄' },
@@ -18,50 +19,6 @@ const tips: Record<TabId, string> = {
   cartoon: "Fun character words make it memorable but personal-ish without real info!",
   number: "Numbers add complexity – bots hate them!",
   symbol: "Symbols turn words into unbreakable code!",
-};
-
-// Simple click sound using Web Audio API
-const playClick = () => {
-  try {
-    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.frequency.value = 600;
-    osc.type = 'sine';
-    gain.gain.setValueAtTime(0.15, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.08);
-  } catch {}
-};
-
-const playSelect = () => {
-  try {
-    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.frequency.value = 880;
-    osc.type = 'sine';
-    gain.gain.setValueAtTime(0.12, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.12);
-    // Second tone for a "ding"
-    const osc2 = ctx.createOscillator();
-    const gain2 = ctx.createGain();
-    osc2.connect(gain2);
-    gain2.connect(ctx.destination);
-    osc2.frequency.value = 1100;
-    osc2.type = 'sine';
-    gain2.gain.setValueAtTime(0.1, ctx.currentTime + 0.05);
-    gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
-    osc2.start(ctx.currentTime + 0.05);
-    osc2.stop(ctx.currentTime + 0.15);
-  } catch {}
 };
 
 const BuildingInterface = () => {
@@ -116,7 +73,6 @@ const BuildingInterface = () => {
           </h2>
           <p className="text-xs text-muted-foreground">{completedTabs}/4 ingredients selected</p>
         </div>
-        {/* Tip toggle button */}
         <motion.button
           onClick={() => { playClick(); setShowTip(!showTip); }}
           className="relative flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold"
@@ -148,7 +104,7 @@ const BuildingInterface = () => {
         />
       </div>
 
-      {/* Tabs - horizontal scroll bar */}
+      {/* Tabs */}
       <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
         {tabs.map(tab => {
           const isComplete = !!selections[tab.id].selected;
@@ -166,7 +122,7 @@ const BuildingInterface = () => {
         })}
       </div>
 
-      {/* Options Grid - BIGGER cards */}
+      {/* Options Grid */}
       <AnimatePresence mode="wait">
         <motion.div
           key={activeTab}
@@ -216,14 +172,12 @@ const BuildingInterface = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Incomplete message */}
       {!allSelected && (
         <p className="text-center text-sm text-muted-foreground mt-4">
           Pick one from each tab to unlock the magic! ✨
         </p>
       )}
 
-      {/* Reveal Button */}
       <motion.button
         onClick={handleReveal}
         className={`game-btn-accent mt-4 w-full text-lg ${!allSelected ? 'opacity-40 cursor-not-allowed' : ''}`}
@@ -234,11 +188,10 @@ const BuildingInterface = () => {
         🔮 Reveal My Wizard Password!
       </motion.button>
 
-      {/* Floating Tip Panel - right side popup */}
+      {/* Floating Tip Panel */}
       <AnimatePresence>
         {showTip && (
           <>
-            {/* Backdrop */}
             <motion.div
               className="fixed inset-0 z-40"
               style={{ background: 'hsl(var(--foreground) / 0.2)' }}
@@ -247,7 +200,6 @@ const BuildingInterface = () => {
               exit={{ opacity: 0 }}
               onClick={() => setShowTip(false)}
             />
-            {/* Panel */}
             <motion.div
               className="fixed right-4 top-1/2 z-50 w-80 max-w-[85vw] rounded-3xl border-2 p-5 shadow-xl"
               style={{
