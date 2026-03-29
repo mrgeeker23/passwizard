@@ -86,52 +86,122 @@ const cartoonTitles = [
 ];
 
 // SYMBOL FORGE
-const symbolPool = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '-', '=', '{', '}', '[', ']', '|', ':', ';', '<', '>', '?', '~'];
+const funSymbolPool = ['!', '@', '#', '$', '*', '+', '?'];
+const proSymbolPool = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '-', '=', '{', '}', '[', ']', '|', ':', ';', '<', '>', '?', '~'];
 const rareSymbols = ['★', '∞', '◆', '♦'];
 
+// Fun mode cartoons - kid-friendly, simple names
+const funCartoonEras = {
+  classic: [
+    { label: 'Garfield', emoji: '🐱' },
+    { label: 'ScoobyDoo', emoji: '🐕' },
+    { label: 'TomAndJerry', emoji: '🐭' },
+  ],
+  modern: [
+    { label: 'Bluey', emoji: '🐶' },
+    { label: 'PawPatrol', emoji: '🐾' },
+    { label: 'PeppaPig', emoji: '🐷' },
+  ],
+  y2k: [
+    { label: 'SpongeBob', emoji: '🧽' },
+    { label: 'Pikachu', emoji: '⚡' },
+    { label: 'Doraemon', emoji: '🤖' },
+  ],
+};
+
+const funCartoonTitles = [
+  'Buddy', 'Star', 'Hero', 'Pal', 'Friend', 'Champ',
+];
+
+// Fun mode colors - simpler names
+const funColorBuckets = {
+  fire: [
+    { label: 'RedStar', emoji: '⭐', color: '0 80% 50%' },
+    { label: 'OrangeGlow', emoji: '🌅', color: '25 95% 55%' },
+  ],
+  water: [
+    { label: 'BlueSky', emoji: '☁️', color: '200 80% 55%' },
+    { label: 'OceanWave', emoji: '🌊', color: '215 75% 50%' },
+  ],
+  nature: [
+    { label: 'GreenLeaf', emoji: '🍀', color: '140 70% 40%' },
+    { label: 'LimeZap', emoji: '🦎', color: '100 75% 45%' },
+  ],
+  mystic: [
+    { label: 'PurpleMagic', emoji: '🔮', color: '270 65% 50%' },
+    { label: 'GoldShine', emoji: '👑', color: '42 90% 50%' },
+  ],
+};
 function pickRandom<T>(arr: T[], count: number): T[] {
   const shuffled = [...arr].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, count);
 }
 
-function generateNumbers(): ForgeChoice[] {
+function generateNumbers(mode: 'fun' | 'pro'): ForgeChoice[] {
   const nums: number[] = [];
-  const first = Math.floor(Math.random() * 100) + 1;
+  const max = mode === 'fun' ? 20 : 100;
+  const minDist = mode === 'fun' ? 5 : 15;
+  const first = Math.floor(Math.random() * max) + 1;
   nums.push(first);
   
   let attempts = 0;
   while (nums.length < 3 && attempts < 100) {
-    const n = Math.floor(Math.random() * 100) + 1;
-    const farEnough = nums.every(existing => Math.abs(n - existing) >= 15);
+    const n = Math.floor(Math.random() * max) + 1;
+    const farEnough = nums.every(existing => Math.abs(n - existing) >= minDist);
     if (farEnough) nums.push(n);
     attempts++;
   }
-  // Fallback
-  while (nums.length < 3) nums.push(Math.floor(Math.random() * 100) + 1);
+  while (nums.length < 3) nums.push(Math.floor(Math.random() * max) + 1);
   
-  return nums.map(n => ({ label: String(n), emoji: '🎲' }));
+  return nums.map(n => ({ label: String(n), emoji: mode === 'fun' ? '🎯' : '🎲' }));
 }
 
-function generateSymbols(): ForgeChoice[] {
-  const count = Math.random() < 0.5 ? 3 : 3;
+function generateSymbols(mode: 'fun' | 'pro'): ForgeChoice[] {
+  const pool = mode === 'fun' ? funSymbolPool : proSymbolPool;
   const results: ForgeChoice[] = [];
   
-  for (let i = 0; i < count; i++) {
-    const len = Math.random() < 0.4 ? 1 : Math.random() < 0.7 ? 2 : 3;
-    const useRare = Math.random() < 0.1;
+  for (let i = 0; i < 3; i++) {
+    const len = mode === 'fun' ? 1 : (Math.random() < 0.4 ? 1 : Math.random() < 0.7 ? 2 : 3);
+    const useRare = mode === 'pro' && Math.random() < 0.1;
     
     if (useRare && len <= 2) {
       const rare = pickRandom(rareSymbols, len);
       results.push({ label: rare.join(''), emoji: '✨' });
     } else {
-      const syms = pickRandom(symbolPool, len);
+      const syms = pickRandom(pool, len);
       results.push({ label: syms.join(''), emoji: '✨' });
     }
   }
   return results;
 }
 
-export function generateForgeOptions(): ForgeOptions {
+export function generateForgeOptions(mode: 'fun' | 'pro' = 'fun'): ForgeOptions {
+  if (mode === 'fun') {
+    const bucketKeys = Object.keys(funColorBuckets) as (keyof typeof funColorBuckets)[];
+    const selectedBuckets = pickRandom(bucketKeys, 3);
+    const colors = selectedBuckets.map(b => pickRandom(funColorBuckets[b], 1)[0]);
+
+    const eraKeys = Object.keys(funCartoonEras) as (keyof typeof funCartoonEras)[];
+    const selectedEras = pickRandom(eraKeys, 2);
+    const cartoonPool: ForgeChoice[] = [];
+    selectedEras.forEach(era => {
+      const chars = pickRandom(funCartoonEras[era], 2);
+      chars.forEach(c => {
+        const title = pickRandom(funCartoonTitles, 1)[0];
+        cartoonPool.push({ ...c, label: `${c.label} ${title}` });
+      });
+    });
+    const cartoons = pickRandom(cartoonPool, 3);
+
+    return {
+      colors,
+      cartoons,
+      numbers: generateNumbers('fun'),
+      symbols: generateSymbols('fun'),
+    };
+  }
+
+  // Pro mode - complex options
   const bucketKeys = Object.keys(colorBuckets) as (keyof typeof colorBuckets)[];
   const selectedBuckets = pickRandom(bucketKeys, 3);
   const colors = selectedBuckets.map(b => pickRandom(colorBuckets[b], 1)[0]);
@@ -151,8 +221,8 @@ export function generateForgeOptions(): ForgeOptions {
   return {
     colors,
     cartoons,
-    numbers: generateNumbers(),
-    symbols: generateSymbols(),
+    numbers: generateNumbers('pro'),
+    symbols: generateSymbols('pro'),
   };
 }
 

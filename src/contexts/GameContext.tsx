@@ -45,12 +45,19 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [selectedCartoon, setCartoon] = useState<string | null>(null);
   const [selectedNumber, setNumber] = useState<string | null>(null);
   const [selectedSymbol, setSymbol] = useState<string | null>(null);
-  const [forgeOptions, setForgeOptions] = useState<ForgeOptions>(generateForgeOptions());
+  const [forgeOptions, setForgeOptions] = useState<ForgeOptions>(generateForgeOptions('fun'));
   const [generatedPassword, setGeneratedPassword] = useState('');
   const [quizScore, setQuizScore] = useState(0);
 
   const setMode = useCallback((m: GameMode) => {
     setModeState(m);
+    if (m) {
+      setForgeOptions(generateForgeOptions(m));
+      setColor(null);
+      setCartoon(null);
+      setNumber(null);
+      setSymbol(null);
+    }
     if (m === 'pro') {
       document.documentElement.classList.add('dark');
     } else {
@@ -100,7 +107,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setNumber(null);
     setSymbol(null);
     setGeneratedPassword('');
-    setForgeOptions(generateForgeOptions());
+    setForgeOptions(generateForgeOptions(mode || 'fun'));
     setScreen('building');
   }, []);
 
